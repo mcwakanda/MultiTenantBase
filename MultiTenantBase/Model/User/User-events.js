@@ -1,0 +1,1 @@
+model.User.password.onSet = function(password) {	this.HA1Key = directory.computeHA1(MYAPP.settings.passwordSalt, password)};

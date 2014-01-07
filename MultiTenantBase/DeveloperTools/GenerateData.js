@@ -1,0 +1,1 @@
+﻿//run this file server side to generate some sample datafor(i = 0; i < 5; i++){	//create 5 accounts	var theAccount = new ds.Account({name: "Account" + i});	theAccount.save();	for(j = 0; j < 10; j++){		//create 10 users per account with password "hello"		new ds.User({username: "User" + j + "4" + theAccount.name, password: "password"}).save();	}}

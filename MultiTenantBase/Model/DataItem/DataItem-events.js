@@ -1,0 +1,1 @@
+model.DataItem.events.onRestrictingQuery = function() {	//restrict returns to only the current account};

@@ -1,0 +1,1 @@
+model.User.entityMethods.checkPassword = function() {	// Add your code here;};
