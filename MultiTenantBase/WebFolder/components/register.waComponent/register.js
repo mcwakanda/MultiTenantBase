@@ -11,16 +11,7 @@ function constructor (id) {
 	// @endregion// @endlock
 
 	this.load = function (data) {// @lock
-		var appLogin = function(username, password){
-			WAF.directory.loginByPassword(username, password,{
-				onSuccess: function(event){
-					
-				},
-				onError: {
-					
-				}
-			});
-		}
+
 	// @region namespaceDeclaration// @startlock
 	var registerButton = {};	// @button
 	// @endregion// @endlock
@@ -41,13 +32,15 @@ function constructor (id) {
 				password: password
 			}],
 			onSuccess: function(event){
-				if(event.result){
+				if(event.result == true){
 					appLogin(username, password);
-				} else
+				} else {
+					alert('Could not register. ' + event.result.errorMessage);
+				}
 			},
 			onError: function(err){
 				//handle error
-				alert('Could not create new account');
+				alert('Could not create new account. Server communication error. ');
 			}
 		});
 	};// @lock

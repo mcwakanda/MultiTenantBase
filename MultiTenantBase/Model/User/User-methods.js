@@ -1,1 +1,1 @@
-model.User.entityMethods.checkPassword = function() {	// Add your code here;};
+model.User.entityMethods.checkPassword = function(password) {	var hash = directory.computeHA1(MYAPP.settings.passwordSalt, password);        return (hash === this.HA1Key);};

@@ -13,11 +13,18 @@ function constructor (id) {
 	this.load = function (data) {// @lock
 
 	// @region namespaceDeclaration// @startlock
+	var loginButton = {};	// @button
 	// @endregion// @endlock
 
 	// eventHandlers// @lock
 
+	loginButton.click = function loginButton_click (event)// @startlock
+	{// @endlock
+		appLogin($$(getHtmlId('usernameInput')).getValue(), $$(getHtmlId('passwordInput')).getValue());
+	};// @lock
+
 	// @region eventManager// @startlock
+	WAF.addListener(this.id + "_loginButton", "click", loginButton.click, "WAF");
 	// @endregion// @endlock
 
 	};// @lock

@@ -6,7 +6,7 @@ WAF.onAfterInit = function onAfterInit() {// @lock
 	var loginViewButton = {};	// @button
 	var registerViewButton = {};	// @button
 // @endregion// @endlock
-
+		
 // eventHandlers// @lock
 
 	documentEvent.onLoad = function documentEvent_onLoad (event)// @startlock

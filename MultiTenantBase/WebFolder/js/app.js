@@ -1,0 +1,1 @@
+﻿var appLogin = function(username, password){	WAF.directory.loginByPassword(username, password,{		onSuccess: function(event){			debugger;			if(event.result == true){				window.location = '/app';			} else {				alert('Login failed.');			}		},		onError: function(err){			debugger;		} 	});}
