@@ -1,1 +1,1 @@
-model.User.password.onSet = function(password) {	this.HA1Key = directory.computeHA1(MYAPP.settings.passwordSalt, password)};
+model.User.password.onSet = function(password) {	this.HA1Key = directory.computeHA1(MYAPP.settings.passwordSalt, password)};model.User.events.onValidate = function() {	// Ensure username is unique	var uniqueName = ds.User.find('username = :1', this.username);	if(uniqueName != null){		return {error: 1044, errorMessage: 'Username must be unique.'};	}};
