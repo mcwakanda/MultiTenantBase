@@ -461,6 +461,11 @@
 					"kind" : "onValidate",
 					"from" : "model.User.events.onValidate",
 					"userDefined" : true
+				},
+				{
+					"kind" : "onRestrictingQuery",
+					"from" : "model.User.events.onRestrictingQuery",
+					"userDefined" : true
 				}
 			],
 			"methods" : 
