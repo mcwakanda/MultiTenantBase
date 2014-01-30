@@ -248,6 +248,16 @@
 			"events" : 
 			[
 				{
+					"kind" : "onInit",
+					"from" : "model.DataItem.events.onInit",
+					"userDefined" : true
+				},
+				{
+					"kind" : "onValidate",
+					"from" : "model.DataItem.events.onValidate",
+					"userDefined" : true
+				},
+				{
 					"kind" : "onRestrictingQuery",
 					"from" : "model.DataItem.events.onRestrictingQuery",
 					"userDefined" : true
