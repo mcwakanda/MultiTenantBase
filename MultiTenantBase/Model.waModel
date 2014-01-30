@@ -1,1 +1,491 @@
-﻿{	"toJSON": true,	"extraProperties": {		"version": "2",		"classes": {			"Account": {				"panelColor": "#C3D69B",				"panel": {					"isOpen": "true",					"pathVisible": true,					"position": {						"X": 25,						"Y": 20					}				},				"attributes": {					"permissionType": {						"note": "Advanced, Open"					}				}			},			"User": {				"panelColor": "#996699",				"panel": {					"isOpen": "true",					"pathVisible": true,					"position": {						"X": 36,						"Y": 359					}				}			},			"DataItem": {				"panelColor": "#B2A2C7",				"panel": {					"isOpen": "true",					"pathVisible": true,					"position": {						"X": 348,						"Y": 37					}				}			},			"Permission": {				"panelColor": "#eee",				"panel": {					"isOpen": "true",					"pathVisible": true,					"position": {						"X": 706,						"Y": 210					}				}			},			"Group": {				"panelColor": "#D88CFF",				"panel": {					"isOpen": "true",					"pathVisible": true,					"position": {						"X": 413,						"Y": 494					}				}			}		},		"model": {			"scriptMode": "manual",			"workspaceLeft": 0,			"workspaceTop": 0,			"lastScriptLocation": {				"User": {					"method": "User/User-methods.js",					"computed": "User/User-events.js",					"events": "User/User-events.js"				},				"DataItem": {					"events": "DataItem/DataItem-events.js"				},				"Account": {					"method": "Account/Account-methods.js",					"events": "Account/Account-events.js"				}			}		}	},	"dataClasses": [		{			"name": "Account",			"className": "Account",			"collectionName": "Accounts",			"scope": "public",			"attributes": [				{					"name": "ID",					"kind": "storage",					"scope": "public",					"unique": true,					"autosequence": true,					"type": "long",					"indexKind": "btree",					"primKey": true				},				{					"name": "name",					"kind": "storage",					"scope": "public",					"type": "string"				},				{					"name": "dataItems",					"kind": "relatedEntities",					"scope": "public",					"type": "DataItems",					"reversePath": true,					"path": "account"				},				{					"name": "users",					"kind": "relatedEntities",					"scope": "public",					"type": "Users",					"reversePath": true,					"path": "account"				},				{					"name": "owner",					"kind": "relatedEntity",					"scope": "public",					"type": "User",					"path": "User"				},				{					"name": "permissionType",					"kind": "storage",					"scope": "public",					"type": "string"				}			],			"events": [				{					"kind": "onSave",					"from": "model.Account.events.onSave"				},				{					"kind": "onValidate",					"from": "model.Account.events.onValidate",					"userDefined": true				}			],			"methods": [				{					"name": "registerAccount",					"applyTo": "dataClass",					"scope": "public",					"from": "model.Account.methods.registerAccount",					"userDefined": true				}			]		},		{			"name": "DataItem",			"className": "DataItem",			"collectionName": "DataItems",			"scope": "public",			"attributes": [				{					"name": "ID",					"kind": "storage",					"scope": "public",					"unique": true,					"autosequence": true,					"type": "long",					"indexKind": "btree",					"primKey": true				},				{					"name": "account",					"kind": "relatedEntity",					"scope": "publicOnServer",					"type": "Account",					"path": "Account",					"events": [						{							"kind": "onSave",							"from": "model.DataItem.account.events.onSave"						},						{							"kind": "onInit",							"from": "model.DataItem.account.events.onInit",							"userDefined": true						}					]				},				{					"name": "textInfo",					"kind": "storage",					"scope": "public",					"type": "string"				},				{					"name": "permissions",					"kind": "relatedEntities",					"scope": "public",					"type": "Permissions",					"reversePath": true,					"path": "dataItem"				}			],			"events": [				{					"kind": "onRestrictingQuery",					"from": "model.DataItem.events.onRestrictingQuery",					"userDefined": true				}			]		},		{			"name": "Group",			"className": "Group",			"collectionName": "Groups",			"scope": "public",			"attributes": [				{					"name": "ID",					"kind": "storage",					"scope": "public",					"unique": true,					"autosequence": true,					"type": "long",					"indexKind": "btree",					"primKey": true				},				{					"name": "name",					"kind": "storage",					"scope": "public",					"type": "string",					"indexKind": "cluster"				},				{					"name": "user",					"kind": "relatedEntity",					"scope": "public",					"type": "User",					"path": "User"				},				{					"name": "permissions",					"kind": "relatedEntities",					"scope": "public",					"type": "Permissions",					"reversePath": true,					"path": "group"				}			]		},		{			"name": "Permission",			"className": "Permission",			"collectionName": "Permissions",			"scope": "public",			"attributes": [				{					"name": "ID",					"kind": "storage",					"scope": "public",					"unique": true,					"autosequence": true,					"type": "long",					"indexKind": "btree",					"primKey": true				},				{					"name": "level",					"kind": "storage",					"scope": "public",					"type": "number",					"indexKind": "cluster"				},				{					"name": "group",					"kind": "relatedEntity",					"scope": "public",					"type": "Group",					"path": "Group"				},				{					"name": "groupName",					"kind": "alias",					"scope": "public",					"type": "string",					"path": "group.name"				},				{					"name": "dataItem",					"kind": "relatedEntity",					"scope": "public",					"type": "DataItem",					"path": "DataItem"				}			]		},		{			"name": "User",			"className": "User",			"collectionName": "Users",			"scope": "public",			"attributes": [				{					"name": "ID",					"kind": "storage",					"scope": "public",					"unique": true,					"autosequence": true,					"autogenerate": true,					"type": "uuid",					"indexKind": "btree",					"primKey": true				},				{					"name": "username",					"kind": "storage",					"scope": "public",					"type": "string",					"indexKind": "auto"				},				{					"name": "password",					"kind": "calculated",					"scope": "public",					"type": "string",					"scriptKind": "javascript",					"onSet": [						{							"from": "model.User.password.onSet",							"userDefined": true						}					]				},				{					"name": "HA1Key",					"kind": "storage",					"scope": "public",					"type": "string"				},				{					"name": "account",					"kind": "relatedEntity",					"scope": "public",					"type": "Account",					"path": "Account"				},				{					"name": "fullName",					"kind": "storage",					"scope": "public",					"type": "string"				},				{					"name": "accountsOwned",					"kind": "relatedEntities",					"scope": "public",					"type": "Accounts",					"reversePath": true,					"path": "owner"				},				{					"name": "isAdmin",					"kind": "storage",					"scope": "public",					"type": "bool"				},				{					"name": "language",					"kind": "storage",					"scope": "public",					"type": "string"				},				{					"name": "groups",					"kind": "relatedEntities",					"scope": "public",					"type": "Groups",					"reversePath": true,					"path": "user"				}			],			"events": [				{					"kind": "onInit",					"from": "model.User.events.onInit",					"userDefined": true				},				{					"kind": "onValidate",					"from": "model.User.events.onValidate",					"userDefined": true				}			],			"methods": [				{					"name": "checkPassword",					"applyTo": "entity",					"scope": "publicOnServer",					"from": "model.User.entityMethods.checkPassword",					"userDefined": true				},				{					"name": "getSettings",					"applyTo": "dataClass",					"scope": "public",					"from": "model.User.methods.getSettings",					"userDefined": true				}			]		}	]}
+
+{
+	"toJSON" : true,
+	"extraProperties" : 
+	{
+		"version" : "2",
+		"classes" : 
+		{
+			"Account" : 
+			{
+				"panelColor" : "#C3D69B",
+				"panel" : 
+				{
+					"isOpen" : "true",
+					"pathVisible" : true,
+					"position" : 
+					{
+						"X" : 25,
+						"Y" : 20
+					}
+				},
+				"attributes" : 
+				{
+					"permissionType" : 
+					{
+						"note" : "Advanced, Open"
+					}
+				}
+			},
+			"User" : 
+			{
+				"panelColor" : "#996699",
+				"panel" : 
+				{
+					"isOpen" : "true",
+					"pathVisible" : true,
+					"position" : 
+					{
+						"X" : 36,
+						"Y" : 359
+					}
+				}
+			},
+			"DataItem" : 
+			{
+				"panelColor" : "#B2A2C7",
+				"panel" : 
+				{
+					"isOpen" : "true",
+					"pathVisible" : true,
+					"position" : 
+					{
+						"X" : 348,
+						"Y" : 37
+					}
+				}
+			},
+			"Permission" : 
+			{
+				"panelColor" : "#eee",
+				"panel" : 
+				{
+					"isOpen" : "true",
+					"pathVisible" : true,
+					"position" : 
+					{
+						"X" : 706,
+						"Y" : 210
+					}
+				}
+			},
+			"Group" : 
+			{
+				"panelColor" : "#D88CFF",
+				"panel" : 
+				{
+					"isOpen" : "true",
+					"pathVisible" : true,
+					"position" : 
+					{
+						"X" : 413,
+						"Y" : 494
+					}
+				}
+			}
+		},
+		"model" : 
+		{
+			"scriptMode" : "manual",
+			"workspaceLeft" : 0,
+			"workspaceTop" : 0,
+			"lastScriptLocation" : 
+			{
+				"User" : 
+				{
+					"method" : "User/User-methods.js",
+					"computed" : "User/User-events.js",
+					"events" : "User/User-events.js"
+				},
+				"DataItem" : 
+				{
+					"events" : "DataItem/DataItem-events.js",
+					"method" : "DataItem/DataItem-methods.js"
+				},
+				"Account" : 
+				{
+					"method" : "Account/Account-methods.js",
+					"events" : "Account/Account-events.js"
+				}
+			}
+		}
+	},
+	"dataClasses" : 
+	[
+		{
+			"name" : "Account",
+			"className" : "Account",
+			"collectionName" : "Accounts",
+			"scope" : "public",
+			"attributes" : 
+			[
+				{
+					"name" : "ID",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"unique" : true,
+					"autosequence" : true,
+					"type" : "long",
+					"indexKind" : "btree"
+				},
+				{
+					"name" : "name",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "string"
+				},
+				{
+					"name" : "dataItems",
+					"kind" : "relatedEntities",
+					"scope" : "public",
+					"type" : "DataItems",
+					"reversePath" : true,
+					"path" : "account"
+				},
+				{
+					"name" : "users",
+					"kind" : "relatedEntities",
+					"scope" : "public",
+					"type" : "Users",
+					"reversePath" : true,
+					"path" : "account"
+				},
+				{
+					"name" : "owner",
+					"kind" : "relatedEntity",
+					"scope" : "public",
+					"type" : "User",
+					"path" : "User"
+				},
+				{
+					"name" : "permissionType",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "string"
+				}
+			],
+			"events" : 
+			[
+				{
+					"kind" : "onSave",
+					"from" : "model.Account.events.onSave"
+				},
+				{
+					"kind" : "onValidate",
+					"from" : "model.Account.events.onValidate",
+					"userDefined" : true
+				}
+			],
+			"methods" : 
+			[
+				{
+					"name" : "registerAccount",
+					"applyTo" : "dataClass",
+					"scope" : "public",
+					"from" : "model.Account.methods.registerAccount",
+					"userDefined" : true
+				}
+			],
+			"key" : 
+			[
+				{
+					"name" : "ID"
+				}
+			]
+		},
+		{
+			"name" : "DataItem",
+			"className" : "DataItem",
+			"collectionName" : "DataItems",
+			"scope" : "public",
+			"attributes" : 
+			[
+				{
+					"name" : "ID",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"unique" : true,
+					"autosequence" : true,
+					"type" : "long",
+					"indexKind" : "btree"
+				},
+				{
+					"name" : "account",
+					"kind" : "relatedEntity",
+					"scope" : "publicOnServer",
+					"type" : "Account",
+					"path" : "Account",
+					"events" : 
+					[
+						{
+							"kind" : "onSave",
+							"from" : "model.DataItem.account.events.onSave"
+						},
+						{
+							"kind" : "onInit",
+							"from" : "model.DataItem.account.events.onInit",
+							"userDefined" : true
+						}
+					]
+				},
+				{
+					"name" : "textInfo",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "string"
+				},
+				{
+					"name" : "permissions",
+					"kind" : "relatedEntities",
+					"scope" : "public",
+					"type" : "Permissions",
+					"reversePath" : true,
+					"path" : "dataItem"
+				}
+			],
+			"events" : 
+			[
+				{
+					"kind" : "onRestrictingQuery",
+					"from" : "model.DataItem.events.onRestrictingQuery",
+					"userDefined" : true
+				}
+			],
+			"key" : 
+			[
+				{
+					"name" : "ID"
+				}
+			]
+		},
+		{
+			"name" : "Group",
+			"className" : "Group",
+			"collectionName" : "Groups",
+			"scope" : "public",
+			"attributes" : 
+			[
+				{
+					"name" : "ID",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"unique" : true,
+					"autosequence" : true,
+					"type" : "long",
+					"indexKind" : "btree"
+				},
+				{
+					"name" : "name",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"type" : "string",
+					"indexKind" : "cluster"
+				},
+				{
+					"name" : "user",
+					"kind" : "relatedEntity",
+					"scope" : "public",
+					"type" : "User",
+					"path" : "User"
+				},
+				{
+					"name" : "permissions",
+					"kind" : "relatedEntities",
+					"scope" : "public",
+					"type" : "Permissions",
+					"reversePath" : true,
+					"path" : "group"
+				}
+			],
+			"key" : 
+			[
+				{
+					"name" : "ID"
+				}
+			]
+		},
+		{
+			"name" : "Permission",
+			"className" : "Permission",
+			"collectionName" : "Permissions",
+			"scope" : "public",
+			"attributes" : 
+			[
+				{
+					"name" : "ID",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"unique" : true,
+					"autosequence" : true,
+					"type" : "long",
+					"indexKind" : "btree"
+				},
+				{
+					"name" : "level",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"type" : "number",
+					"indexKind" : "cluster"
+				},
+				{
+					"name" : "group",
+					"kind" : "relatedEntity",
+					"scope" : "public",
+					"type" : "Group",
+					"path" : "Group"
+				},
+				{
+					"name" : "groupName",
+					"kind" : "alias",
+					"scope" : "public",
+					"type" : "string",
+					"path" : "group.name"
+				},
+				{
+					"name" : "dataItem",
+					"kind" : "relatedEntity",
+					"scope" : "public",
+					"type" : "DataItem",
+					"path" : "DataItem"
+				}
+			],
+			"key" : 
+			[
+				{
+					"name" : "ID"
+				}
+			]
+		},
+		{
+			"name" : "User",
+			"className" : "User",
+			"collectionName" : "Users",
+			"scope" : "public",
+			"attributes" : 
+			[
+				{
+					"name" : "ID",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"unique" : true,
+					"autosequence" : true,
+					"autogenerate" : true,
+					"type" : "uuid",
+					"indexKind" : "btree"
+				},
+				{
+					"name" : "username",
+					"kind" : "storage",
+					"scope" : "public",
+					"indexed" : true,
+					"type" : "string",
+					"indexKind" : "auto"
+				},
+				{
+					"name" : "password",
+					"kind" : "calculated",
+					"scope" : "public",
+					"type" : "string",
+					"scriptKind" : "javascript",
+					"onSet" : 
+					[
+						{
+							"from" : "model.User.password.onSet",
+							"userDefined" : true
+						}
+					]
+				},
+				{
+					"name" : "HA1Key",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "string"
+				},
+				{
+					"name" : "account",
+					"kind" : "relatedEntity",
+					"scope" : "public",
+					"type" : "Account",
+					"path" : "Account"
+				},
+				{
+					"name" : "fullName",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "string"
+				},
+				{
+					"name" : "accountsOwned",
+					"kind" : "relatedEntities",
+					"scope" : "public",
+					"type" : "Accounts",
+					"reversePath" : true,
+					"path" : "owner"
+				},
+				{
+					"name" : "isAdmin",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "bool"
+				},
+				{
+					"name" : "language",
+					"kind" : "storage",
+					"scope" : "public",
+					"type" : "string"
+				},
+				{
+					"name" : "groups",
+					"kind" : "relatedEntities",
+					"scope" : "public",
+					"type" : "Groups",
+					"reversePath" : true,
+					"path" : "user"
+				}
+			],
+			"events" : 
+			[
+				{
+					"kind" : "onInit",
+					"from" : "model.User.events.onInit",
+					"userDefined" : true
+				},
+				{
+					"kind" : "onValidate",
+					"from" : "model.User.events.onValidate",
+					"userDefined" : true
+				}
+			],
+			"methods" : 
+			[
+				{
+					"name" : "checkPassword",
+					"applyTo" : "entity",
+					"scope" : "publicOnServer",
+					"from" : "model.User.entityMethods.checkPassword",
+					"userDefined" : true
+				},
+				{
+					"name" : "getSettings",
+					"applyTo" : "dataClass",
+					"scope" : "public",
+					"from" : "model.User.methods.getSettings",
+					"userDefined" : true
+				}
+			],
+			"key" : 
+			[
+				{
+					"name" : "ID"
+				}
+			]
+		}
+	]
+}
