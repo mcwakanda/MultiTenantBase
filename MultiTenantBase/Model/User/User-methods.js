@@ -1,1 +1,1 @@
-model.User.entityMethods.checkPassword = function(password) {	var hash = directory.computeHA1(MYAPP.settings.passwordSalt, password);        return (hash === this.HA1Key);};
+model.User.entityMethods.checkPassword = function(password) {	var hash = directory.computeHA1(APP.settings.passwordSalt, password);        return (hash === this.HA1Key);};model.User.methods.getSettings = function() {	return {		accountID: APP.getSessionAccount(),		isAdmin: APP.getAdminStatus(currentUser().ID)	}	};model.User.methods.getSettings.scope = "public";

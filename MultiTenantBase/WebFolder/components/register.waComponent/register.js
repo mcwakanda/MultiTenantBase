@@ -33,7 +33,7 @@ function constructor (id) {
 			}],
 			onSuccess: function(event){
 				if(event.result == true){
-					appLogin(username, password);
+					APP.login(username, password);
 				} else {
 					alert('Could not register. ' + event.result.errorMessage);
 				}

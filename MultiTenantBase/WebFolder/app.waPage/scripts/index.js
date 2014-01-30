@@ -9,6 +9,18 @@ WAF.onAfterInit = function onAfterInit() {// @lock
 
 	documentEvent.onLoad = function documentEvent_onLoad (event)// @startlock
 	{// @endlock
+		if(WAF.directory.currentUser() != null){
+			ds.User.getSettings({
+				onSuccess: function(event){
+					debugger;
+					APP.userSettings = event.result;
+				}
+			});
+		} else {
+			window.location = "/";
+		}
+		
+		
 		$$('currentUsernameText').setValue(WAF.directory.currentUser().userName);
 	};// @lock
 

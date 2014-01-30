@@ -1,1 +1,1 @@
-﻿var MYAPP = {};MYAPP.settings = {	passwordSalt: "SomeRandomSaltHere"}
+﻿include('Scripts/app.js');

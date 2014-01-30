@@ -20,7 +20,7 @@ function constructor (id) {
 
 	loginButton.click = function loginButton_click (event)// @startlock
 	{// @endlock
-		appLogin($$(getHtmlId('usernameInput')).getValue(), $$(getHtmlId('passwordInput')).getValue());
+		APP.login($$(getHtmlId('usernameInput')).getValue(), $$(getHtmlId('passwordInput')).getValue());
 	};// @lock
 
 	// @region eventManager// @startlock
