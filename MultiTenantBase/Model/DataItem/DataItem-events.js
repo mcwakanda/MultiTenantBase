@@ -1,1 +1,1 @@
-model.DataItem.events.onRestrictingQuery = function() {	//restrict returns to only the current account};
+model.DataItem.events.onRestrictingQuery = function() {	//runs the account and user permissions logic	var returnCollection = APP.getReadCollection(this.getName());			//Do additional restrictions beyond the standards if needed		return returnCollection;};model.DataItem.account.events.onInit = function() {	this = APP.getUserAccount();};
