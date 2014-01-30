@@ -1,1 +1,1 @@
-﻿include('Scripts/app.js');
+﻿include('Scripts/app.js');include('Scripts/app_errors.js');include('Scripts/app_text.js');

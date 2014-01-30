@@ -1,1 +1,1 @@
-﻿token = currentSession().promoteWith("Admin");//ds.Group.remove();//ds.User.remove();//ds.Account.remove();ds.DataItem.all();
+﻿token = currentSession().promoteWith("Admin");ds.Group.remove();ds.User.remove();ds.Account.remove();ds.DataItem.remove();ds.User.all();

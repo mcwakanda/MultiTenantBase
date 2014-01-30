@@ -222,11 +222,6 @@
 						{
 							"kind" : "onSave",
 							"from" : "model.DataItem.account.events.onSave"
-						},
-						{
-							"kind" : "onInit",
-							"from" : "model.DataItem.account.events.onInit",
-							"userDefined" : true
 						}
 					]
 				},
@@ -247,11 +242,6 @@
 			],
 			"events" : 
 			[
-				{
-					"kind" : "onInit",
-					"from" : "model.DataItem.events.onInit",
-					"userDefined" : true
-				},
 				{
 					"kind" : "onValidate",
 					"from" : "model.DataItem.events.onValidate",
@@ -423,15 +413,7 @@
 					"kind" : "relatedEntity",
 					"scope" : "publicOnServer",
 					"type" : "Account",
-					"path" : "Account",
-					"events" : 
-					[
-						{
-							"kind" : "onInit",
-							"from" : "model.User.account.events.onInit",
-							"userDefined" : true
-						}
-					]
+					"path" : "Account"
 				},
 				{
 					"name" : "fullName",
