@@ -411,9 +411,17 @@
 				{
 					"name" : "account",
 					"kind" : "relatedEntity",
-					"scope" : "public",
+					"scope" : "publicOnServer",
 					"type" : "Account",
-					"path" : "Account"
+					"path" : "Account",
+					"events" : 
+					[
+						{
+							"kind" : "onInit",
+							"from" : "model.User.account.events.onInit",
+							"userDefined" : true
+						}
+					]
 				},
 				{
 					"name" : "fullName",
@@ -428,12 +436,6 @@
 					"type" : "Accounts",
 					"reversePath" : true,
 					"path" : "owner"
-				},
-				{
-					"name" : "isAdmin",
-					"kind" : "storage",
-					"scope" : "public",
-					"type" : "bool"
 				},
 				{
 					"name" : "language",
